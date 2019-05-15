@@ -4,8 +4,8 @@ This is a fork of the original [ZombieLoad](https://github.com/IAIK/ZombieLoad) 
 
 Small changes added: 
 
-* introducing simple string leaks
-* introducing string leaks through Domino bytes, as described in the paper 
+* `Variant 1b`: introducing simple string leaks
+* `Variant 1c`: introducing string leaks through Domino bytes, as described in the paper 
 
 This repository contains several applications, demonstrating ZombieLoad. For technical information about the bug, refer to the paper:
 
