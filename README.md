@@ -1,5 +1,12 @@
 # ZombieLoad PoC
 
+This is a fork of the original [ZombieLoad](https://github.com/IAIK/ZombieLoad) repository. 
+
+Small changes added: 
+
+* introducing simple string leaks
+* introducing string leaks through Domino bytes, as described in the paper 
+
 This repository contains several applications, demonstrating ZombieLoad. For technical information about the bug, refer to the paper:
 
 * [ZombieLoad: Cross-Privilege-Boundary Data Sampling](https://zombieload.com/zombieload.pdf) by Schwarz, Lipp, Moghimi, Van Bulck, Stecklina, Prescher, and Gruss
@@ -27,6 +34,25 @@ The repository contains two different attacker variants.
 ### Variant 1 (Linux only)
 
 Variant 1 is the fastest, easiest and most stable variant for a privileged attacker (i.e., it requires root privileges). Hence, except for testing, this is especially useful for attacks on SGX or for attacks on virtual machines. 
+
+##### Run
+
+For this variant, KASLR and KPTI have to be disabled. This can be achieved by providing `nopti nokaslr` to the kernel command line. 
+Then, run the attacker on one hyperthread as root: `sudo taskset -c 3 ./leak`
+
+### Variant 1b (Linux only)
+
+Simple modification to `Variant 1` to leak a whole string passing in line fill buffers.
+
+##### Run
+
+For this variant, KASLR and KPTI have to be disabled. This can be achieved by providing `nopti nokaslr` to the kernel command line. 
+Then, run the attacker on one hyperthread as root: `sudo taskset -c 3 ./leak`
+
+### Variant 1c (Linux only)
+
+
+Still a modification of the first variant, but using Domino's bytes, leaking a nibble at a time, to enhance precision of the leak. Most of the time error free with comparable performance of `Variant 1c`.
 
 ##### Run
 
