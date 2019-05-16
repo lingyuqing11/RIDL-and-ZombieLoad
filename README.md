@@ -5,7 +5,8 @@ This is a fork of the original [ZombieLoad](https://github.com/IAIK/ZombieLoad) 
 Small changes added: 
 
 * `Variant 1b`: introducing simple string leaks
-* `Variant 1c`: introducing string leaks through Domino bytes, as described in the paper 
+* `Variant 1c`: introducing string leaks through Domino bytes, as described in the paper
+* `ridl`: introducing a poc for concepts taken from [RIDL](https://mdsattacks.com/) paper 
 
 This repository contains several applications, demonstrating ZombieLoad. For technical information about the bug, refer to the paper:
 
@@ -53,6 +54,18 @@ Then, run the attacker on one hyperthread as root: `sudo taskset -c 3 ./leak`
 
 
 Still a modification of the first variant, but using Domino's bytes, leaking a nibble at a time, to enhance precision of the leak. Most of the time error free with comparable performance of `Variant 1c`.
+
+##### Run
+
+For this variant, KASLR and KPTI have to be disabled. This can be achieved by providing `nopti nokaslr` to the kernel command line. 
+Then, run the attacker on one hyperthread as root: `sudo taskset -c 3 ./leak`
+
+### RIDL (MacOS & Linux)
+
+
+A naive implementation of the [RIDL](https://mdsattacks.com/) paper. Induce line fille buffer leaks by dereferencing a NULL pointer into a TSX transaction (not supported by all processors, see [check here](https://github.com/andikleen/tsx-tools)). 
+
+This should work on any system that supports TSX, but (this implementation) has a really lower precision and performance. Still work in progress.
 
 ##### Run
 
