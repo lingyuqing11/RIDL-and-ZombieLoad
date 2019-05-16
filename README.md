@@ -69,8 +69,7 @@ This should work on any system that supports TSX, but (this implementation) has 
 
 ##### Run
 
-For this variant, KASLR and KPTI have to be disabled. This can be achieved by providing `nopti nokaslr` to the kernel command line. 
-Then, run the attacker on one hyperthread as root: `sudo taskset -c 3 ./leak`
+Simply: `taskset -c 3 ./leak`
 
 ### Variant 2 (Windows only)
 
