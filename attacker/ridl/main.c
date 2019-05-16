@@ -28,8 +28,8 @@ int main(int argc, char *argv[]) {
   fprintf(stderr, "[+] Flush+Reload Threshold: %zu\n", CACHE_MISS);
 
   while (1) {
-    // char *mapping = (char *)mmap(0, 4096, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
-    // madvise(mapping, 4096, MADV_DONTNEED);
+    // volatile char *mapping = (char *)mmap(0, 4096, PROT_NONE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+    // madvise((char *)mapping, 4096, MADV_DONTNEED);
     volatile char* mapping = NULL;
 
     if (_xbegin() == _XBEGIN_STARTED)
@@ -41,7 +41,7 @@ int main(int argc, char *argv[]) {
     {
       recover();
     }
-    // munmap(mapping, 4096);
+    // munmap((char *)mapping, 4096);
   }
 
   return 0;
