@@ -6,6 +6,7 @@ Small changes added:
 
 * `Variant 1b`: introducing simple string leaks
 * `Variant 1c`: introducing string leaks through Domino bytes, as described in the paper
+* `Variant 1d`: introducing fast string leaks using masks of byte known, as described in the paper
 * `ridl`: introducing a poc for concepts taken from [RIDL](https://mdsattacks.com/) paper 
 
 This repository contains several applications, demonstrating ZombieLoad. For technical information about the bug, refer to the paper:
@@ -54,6 +55,16 @@ Then, run the attacker on one hyperthread as root: `sudo taskset -c 3 ./leak`
 
 
 Still a modification of the first variant, but using Domino's bytes, leaking a nibble at a time, to enhance precision of the leak. Most of the time error free with comparable performance of `Variant 1c`.
+
+##### Run
+
+For this variant, KASLR and KPTI have to be disabled. This can be achieved by providing `nopti nokaslr` to the kernel command line. 
+Then, run the attacker on one hyperthread as root: `sudo taskset -c 3 ./leak`
+
+### Variant 1d (Linux only)
+
+
+Still a modification of the first variant, but this is super fast thanks to the byte masking techniques described in ZombieLoad and RIDL paper
 
 ##### Run
 
