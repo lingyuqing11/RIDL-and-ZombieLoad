@@ -8,6 +8,7 @@ Small changes added:
 * `Variant 1c`: introducing string leaks through Domino bytes, as described in the paper
 * `Variant 1d`: introducing fast string leaks using masks of byte known, as described in the paper
 * `ridl`: introducing a poc for concepts taken from [RIDL](https://mdsattacks.com/) paper 
+* `Variant X`: try to sniff data passing trough the CPU as urls or `/etc/shadow` file during authentication
 
 This repository contains several applications, demonstrating ZombieLoad. For technical information about the bug, refer to the paper:
 
@@ -31,7 +32,26 @@ Building an attacker or a victim is as simple as running `make` in the folder of
 
 ## Attacker Variants
 
-The repository contains two different attacker variants.
+The repository contains n different attacker variants.
+
+### Variant X (Linux only)
+
+Enhanced version of Variant 1 to leak strings while they pass in CPU. 
+
+##### Run
+
+For this variant, KASLR and KPTI have to be disabled. This can be achieved by providing `nopti nokaslr` to the kernel command line. Moreover you will need a system that support Intel TSX ([check here](https://github.com/andikleen/tsx-tools) or `lscpu | grep rtm`). 
+Then, run the attacker on one hyperthread as root: `sudo taskset -c 3 ./leak`
+
+##### Victims
+1. Using this variant you can try to leak the content of the `/etc/shadow` file, repeatedly calling `passwd` utility:
+
+![](shadow_recovery.png "Shadow recovery")
+
+2. Or can sniff urls that are visited on the host machine from a guest VM:
+
+![](url_recovery.png "Url recovery")
+
 
 ### Variant 1 (Linux only)
 
